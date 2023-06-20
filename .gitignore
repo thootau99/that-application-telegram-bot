@@ -1,0 +1,6 @@
+.env
+.env.redis
+
+/structs
+/node_modules
+/.idea

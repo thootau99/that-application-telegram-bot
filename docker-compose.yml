@@ -1,0 +1,30 @@
+version: "3.8"
+
+networks:
+  bot-network:
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    volumes:
+      - .:/src/app
+    command:
+      - sh
+    tty: true
+    env_file:
+      - .env
+      - .env.redis
+    networks:
+      bot-network:
+        aliases:
+          - "api"
+
+  redis:
+    image: redis
+    networks:
+      bot-network:
+        aliases:
+          - "redis"
