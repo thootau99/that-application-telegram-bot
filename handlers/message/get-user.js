@@ -4,7 +4,7 @@ import got from 'got'
  *
  * @param {string} authKey
  * @param {number} applicationVersion
- * @return {Promise<import('../../structs/message/getuser.struct.struct').MessageGetUserResponse>}
+ * @return {Promise<MessageGetUserResponse>}
  */
 async function apiGetUser (authKey, applicationVersion) {
   const API_HOST = process.env.API_HOST ?? 'example.com'
