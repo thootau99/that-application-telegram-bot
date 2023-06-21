@@ -42,5 +42,5 @@ jobs:
 
       - name: update by docker compose
         run: |
-          ssh production "mkdir -p /home/$$SSH_USER/transfer-telegram-bot"
-          ssh production "cd /home/$$SSH_USER/transfer-telegram-bot && docker-compose pull && docker-compose up -d"
+          ssh production "mkdir -p /home/$SSH_USER/transfer-telegram-bot"
+          ssh production "cd /home/$SSH_USER/transfer-telegram-bot && docker-compose pull && docker-compose up -d"
