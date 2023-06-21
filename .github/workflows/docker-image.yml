@@ -9,7 +9,6 @@ on:
 jobs:
 
   build:
-
     runs-on: Linux
     steps:
       - uses: actions/checkout@v3
@@ -18,3 +17,14 @@ jobs:
         env:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+
+  deploy:
+    runs-on: Linux
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy to machine
+        run: make ci-deploy
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}

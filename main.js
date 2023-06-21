@@ -32,7 +32,13 @@ bot.onText(/^\/getAuthKey/, async (msg) => {
 bot.onText(/^\/listMessageTarget$/, async (msg) => {
   const chatId = msg.chat.id
   /** @type {UserInRedis} */
-  const userData = await getUserData(chatId.toString())
+  let userData
+  try {
+    userData = await getUserData(chatId.toString())
+  } catch (error) {
+    await bot.sendMessage(chatId, 'authKey bô ha̍phoat')
+    return
+  }
   if (!userData) {
     await bot.sendMessage(chatId, 'Chhiáⁿ seng kali̍p 1 ê authKey')
     return
@@ -60,7 +66,13 @@ bot.onText(/^\/listMessageTarget$/, async (msg) => {
 bot.onText(/^\/getMessage$/, async (msg) => {
   const chatId = msg.chat.id
   /** @type {UserInRedis} */
-  const userData = await getUserData(chatId.toString())
+  let userData
+  try {
+    userData = await getUserData(chatId.toString())
+  } catch (error) {
+    await bot.sendMessage(chatId, 'authKey bô ha̍phoat')
+    return
+  }
   if (!userData) {
     await bot.sendMessage(chatId, 'Chhiáⁿ seng kali̍p 1 ê authKey')
     return
@@ -80,7 +92,13 @@ bot.onText(/^\/sendMessage/, async (msg) => {
   try {
     const chatId = msg.chat.id
     /** @type {UserInRedis} */
-    const userData = await getUserData(chatId.toString())
+    let userData
+    try {
+      userData = await getUserData(chatId.toString())
+    } catch (error) {
+      await bot.sendMessage(chatId, 'authKey bô ha̍phoat')
+      return
+    }
     const { groups: { messageContent } } = /\/sendMessage (?<messageContent>[^ $]*)/.exec(msg.text)
 
     if (!userData) {
