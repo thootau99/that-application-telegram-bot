@@ -1,0 +1,20 @@
+name: Build Docker Image & Deploy
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+
+  build:
+
+    runs-on: Linux
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build the Docker image
+        run: make ci-build
+        env:
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}

@@ -20,9 +20,9 @@ RUN yarn --frozen-lockfile
 #USER docker-user
 
 #
-# 🏡 Production Build
+# 🏡 Production Server
 #
-FROM node:18-alpine as build
+FROM node:18-alpine as prod
 
 WORKDIR /app
 
