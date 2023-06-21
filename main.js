@@ -7,6 +7,24 @@ import apiSendMessage from './handlers/message/send.js'
 const token = process.env.TELEGRAM_BOT_KEY ?? ''
 const bot = new TelegramBot(token, { polling: true })
 
+bot.request('setMyCommands', {
+  commands: [
+    {
+      command: 'setAuthKey'
+    }, {
+      command: 'getAuthKey'
+    }, {
+      command: 'listMessageTarget'
+    }, {
+      command: 'getMessage'
+    }, {
+      command: 'sendMessage'
+    }
+  ],
+  scope: { type: 'all_private_chats' },
+  language_code: 'en'
+}).then(r => console.log(r))
+
 bot.onText(/^\/setAuthKey/, async (msg) => {
   try {
     const chatId = msg.chat.id
