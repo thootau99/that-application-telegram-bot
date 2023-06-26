@@ -83,7 +83,7 @@ bot.onText(/^\/list_message_target$/, async (msg) => {
   }
 })
 
-bot.onText(/^\/get_message$/, async (msg) => {
+bot.onText(/^\/get_message/, async (msg) => {
   const chatId = msg.chat.id
   /** @type {UserInRedis} */
   let userData
@@ -97,21 +97,32 @@ bot.onText(/^\/get_message$/, async (msg) => {
     await bot.sendMessage(chatId, 'Chhiáⁿ seng kali̍p 1 ê authKey')
     return
   }
+  let messageLimitCount
+  try {
+    const { groups: { limitCount } } = /\/get_message (?<limitCount>[^ $]*)/.exec(msg.text)
+    messageLimitCount = parseInt(limitCount)
+  } catch {}
   /** @type {MessageGetResponse} */
   const messageWithTarget = await apiGetMessage(userData.authKey, userData.targetPublicKey, 491)
 
-  if (messageWithTarget.result === 12) {
+  // check if api called successful
+  if (messageWithTarget.result === 12 || messageWithTarget.result === 2) {
     await bot.sendMessage(chatId, 'authKey bô ha̍phoat')
     return
   }
 
+  // add user data
   const userRecentTalked = await getRecentTalkedUsers(userData.authKey)
-
   const userNameReference = {
     [userData.targetPublicKey]: userData.targetPublicKey in userRecentTalked ? userRecentTalked[userData.targetPublicKey].name : ''
   }
 
-  await bot.sendMessage(msg.chat.id, messageWithTarget.data.map((message) => `${userNameReference[message.public_key] ?? '自分'}: ${message.message}`).join('\n'))
+  const messages = messageLimitCount
+    ? messageWithTarget.data.slice(0, messageLimitCount)
+    : messageWithTarget.data
+
+  const response = messages.map((message) => `${userNameReference[message.public_key] ?? '自分'}: ${message.message}`).join('\n') ?? 'no message can be provided'
+  await bot.sendMessage(msg.chat.id, response)
 })
 
 bot.onText(/^\/send_message/, async (msg) => {
