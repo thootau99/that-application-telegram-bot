@@ -125,7 +125,7 @@ bot.onText(/^\/send_message/, async (msg) => {
       await bot.sendMessage(chatId, 'authKey bô ha̍phoat')
       return
     }
-    const { groups: { messageContent } } = /\/sendMessage (?<messageContent>[^ $]*)/.exec(msg.text)
+    const { groups: { messageContent } } = /\/send_message (?<messageContent>[^ $]*)/.exec(msg.text)
 
     if (!userData) {
       await bot.sendMessage(chatId, 'Chhiáⁿ seng kali̍p 1 ê authKey')
@@ -146,6 +146,7 @@ bot.onText(/^\/send_message/, async (msg) => {
 
     await bot.sendMessage(msg.chat.id, 'ok.')
   } catch (error) {
+    console.log(error)
     await bot.sendMessage(msg.chat.id, 'error.')
   }
 })
