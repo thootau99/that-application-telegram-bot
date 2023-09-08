@@ -136,7 +136,7 @@ bot.onText(/^\/send_message/, async (msg) => {
       await bot.sendMessage(chatId, 'authKey bô ha̍phoat')
       return
     }
-    const { groups: { messageContent } } = /\/send_message (?<messageContent>[^ $]*)/.exec(msg.text)
+    const { groups: { messageContent } } = /\/send_message (?<messageContent>[^$]*)/.exec(msg.text)
 
     if (!userData) {
       await bot.sendMessage(chatId, 'Chhiáⁿ seng kali̍p 1 ê authKey')
@@ -167,7 +167,7 @@ bot.on('callback_query', async (callbackQuery) => {
   const msg = callbackQuery.message
   try {
     const chatId = msg.chat.id
-    const { groups: { publicToken } } = /\/set_message_target (?<publicToken>[^ $]*)/.exec(action)
+    const { groups: { publicToken } } = /\/set_message_target (?<publicToken>[^$]*)/.exec(action)
     await setUserTargetPublicKey(chatId.toString(), publicToken)
     await bot.sendMessage(msg.chat.id, 'authKey Siáli̍p sêngkong.')
   } catch (error) {
